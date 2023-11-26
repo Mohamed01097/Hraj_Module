@@ -1,0 +1,121 @@
+<odoo>
+    <data>
+
+        <template id="custom_hraj.report_hraj_invoice_template">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <xpath expr="." position="inside">
+                        <link rel="stylesheet" type="text/css" href="/custom_hraj/static/src/css/style.css"/>
+                    </xpath>
+                    <div class="page" dir="rtl">
+                        <h1>تقرير متابعة الفواتير اليومية للعملاء</h1>
+                        <div class="row">
+                            <div>
+                                <h2>
+                                    <strong>من تاريخ:</strong>
+                                    <span t-esc="start_date"/>
+                                    <span id="mySpan"></span>
+                                    <strong>إلى تاريخ:</strong>
+                                    <span t-esc="end_date"/>
+                                </h2>
+                            </div>
+                        </div>
+                        <t t-set="total_invoice" t-value="0"/>
+                        <t t-set="total_tax" t-value="0"/>
+                        <t t-set="total_settle" t-value="0"/>
+                        <t t-set="tax_settle" t-value="0"/>
+                        <br/>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th colspan="3">
+                                        العميل
+                                    </th>
+                                    <th colspan="2">
+                                        الفواتير
+                                    </th>
+                                    <th colspan="2">
+                                        الاشعار
+                                    </th>
+                                    <th colspan="2">
+                                        الفرق
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        الرقم
+                                    </th>
+                                    <th>
+                                        الكود
+                                    </th>
+                                    <th>
+                                        الاسم
+                                    </th>
+                                    <th>
+                                        البضاعة
+                                    </th>
+                                    <th>
+                                        الضريبة
+                                    </th>
+                                    <th>
+                                        البضاعة
+                                    </th>
+                                    <th>
+                                        الضريبة
+                                    </th>
+                                    <th>
+                                        البضاعة
+                                    </th>
+                                    <th>
+                                        الضريبة
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="sorted(invoice_dict)" t-as="invoice">
+                                    <tr>
+                                        <td>
+                                            <span t-esc="invoice_index + 1"/>
+                                        </td>
+                                        <td>00</td>
+                                        <td>
+                                            <span t-esc="invoice_dict[invoice].get('name','')"/>
+                                        </td>
+
+                                        <t t-set="total_invoice" t-value="invoice_dict[invoice].get('total_tax_excldued',0)"/>
+                                        <td>
+                                            <span t-esc="total_invoice"/>
+                                        </td>
+
+                                        <t t-set="total_tax" t-value="invoice_dict[invoice].get('tax',0)"/>
+                                        <td>
+                                            <span t-esc="total_tax"/>
+                                        </td>
+
+                                        <t t-set="total_settle" t-value="invoice_dict[invoice].get('sub_total_settle',0.0)"/>
+                                        <td>
+                                            <span t-esc="total_settle"/>
+                                        </td>
+
+                                        <t t-set="tax_settle" t-value="invoice_dict[invoice].get('tax_settle',0.0)"/>
+                                        <td>
+                                            <span t-esc="tax_settle"/>
+                                        </td>
+
+                                        <td>
+                                            <span t-esc="total_invoice - total_settle"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="total_tax - tax_settle"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

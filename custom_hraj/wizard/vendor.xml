@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hraj_bill_view" model="ir.ui.view">
+        <field name="name">Hraj bill View</field>
+        <field name="model">hraj.bill</field>
+        <field name="arch" type="xml">
+            <form string="bills Hraj">
+                <group>
+                    <group>
+                        <field name="start_date" style="background-color:#f2f2f2;"/>
+                    </group>
+                    <group>
+                        <field name="end_date" style="background-color:#f2f2f2;"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="hraj_bill" class="oe_highlight"
+                            string="Print" type="object"/>
+                    <button string="Cancel" class="btn btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_bill_hraj" model="ir.actions.act_window">
+        <field name="name">تقرير مندوب</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hraj.bill</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="hraj_bill_view"/>
+        <field name="target">new</field>
+        <field name="binding_type">report</field>
+    </record>
+
+    <menuitem id="menu_hraj_reports"
+              name="التقارير"
+              sequence="10"
+              parent="hraj_marketing.menu_haraj_root"/>
+
+    <menuitem id="menu_bills"
+              name="تقرير تفصيلى حسب المندوب"
+              sequence="2"
+              parent="menu_hraj_reports"
+              action="action_bill_hraj"/>
+
+
+</odoo>
